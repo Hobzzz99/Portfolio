@@ -1,0 +1,36 @@
+{
+  "name": "mohab-ahmed-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Premium AI/ML Engineer portfolio for Mohab Ahmed",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "framer-motion": "^11.18.2",
+    "lucide-react": "^0.474.0",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.0.1",
+    "three": "^0.171.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.0.3",
+    "@types/node": "^22.10.7",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@types/three": "^0.171.0",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^15.1.6",
+    "tailwindcss": "^4.0.3",
+    "typescript": "^5.7.3"
+  }
+}

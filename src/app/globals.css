@@ -1,0 +1,354 @@
+@import "tailwindcss";
+
+/* ────────────────────────────────────────────────────────────
+   DESIGN TOKENS  (Tailwind v4 @theme)
+   Blue + black, AI-inspired. Dark by default.
+──────────────────────────────────────────────────────────── */
+@theme {
+  /* Fonts (wired via next/font in layout.tsx) */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+
+  /* Core surface palette */
+  --color-ink: #05070e;
+  --color-ink-2: #080b16;
+  --color-ink-3: #0c1120;
+  --color-line: #17203a;
+
+  /* Blue accent ramp */
+  --color-azure: #3b82f6;
+  --color-sky: #60a5fa;
+  --color-cyan: #22d3ee;
+  --color-deep: #1d4ed8;
+  --color-ice: #bfdbfe;
+
+  /* Text */
+  --color-fg: #e7ecf6;
+  --color-muted: #93a1bd;
+  --color-faint: #64748b;
+
+  /* Always-white text for use on colored (blue-gradient) surfaces —
+     stays white in light mode, unlike text-white which flips. */
+  --color-oncolor: #ffffff;
+
+  /* Motion */
+  --animate-aurora: aurora 22s ease-in-out infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 11s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  --animate-gradient: gradient-pan 8s ease infinite;
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-spin-slow: spin 14s linear infinite;
+  --animate-pulse-ring: pulse-ring 3.2s ease-out infinite;
+}
+
+/* ────────────────────────────────────────────────────────────
+   KEYFRAMES
+──────────────────────────────────────────────────────────── */
+@keyframes aurora {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate3d(4%, -3%, 0) scale(1.15);
+    opacity: 0.8;
+  }
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(2deg);
+  }
+}
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+@keyframes gradient-pan {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  80%,
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
+   BASE
+──────────────────────────────────────────────────────────── */
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    /* prevents decorative blur-blobs from causing horizontal scroll on mobile
+       (clip, unlike hidden, doesn't break sticky/smooth-scroll) */
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+    width: 100%;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-azure) 40%, transparent);
+    color: #fff;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--color-deep), var(--color-azure));
+    border-radius: 999px;
+    border: 2px solid var(--color-ink);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-sky);
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
+   COMPONENT UTILITIES
+──────────────────────────────────────────────────────────── */
+@layer components {
+  /* Glass surfaces */
+  .glass {
+    background: color-mix(in oklab, #0e1424 72%, transparent);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    border: 1px solid color-mix(in oklab, #ffffff 8%, transparent);
+  }
+  .glass-strong {
+    background: color-mix(in oklab, #0e1424 88%, transparent);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border: 1px solid color-mix(in oklab, #ffffff 10%, transparent);
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    background: linear-gradient(
+      100deg,
+      var(--color-ice) 0%,
+      var(--color-sky) 40%,
+      var(--color-cyan) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-animated {
+    background: linear-gradient(
+      100deg,
+      var(--color-ice),
+      var(--color-sky),
+      var(--color-cyan),
+      var(--color-sky),
+      var(--color-ice)
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: var(--animate-gradient);
+  }
+
+  /* Animated gradient border card */
+  .card-hover {
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  .card-hover:hover {
+    transform: translateY(-6px);
+    border-color: color-mix(in oklab, var(--color-azure) 55%, transparent);
+    box-shadow:
+      0 24px 60px -24px color-mix(in oklab, var(--color-azure) 45%, transparent),
+      0 0 0 1px color-mix(in oklab, var(--color-azure) 25%, transparent) inset;
+  }
+
+  /* Soft glow */
+  .glow-blue {
+    box-shadow: 0 0 40px -8px color-mix(in oklab, var(--color-azure) 60%, transparent);
+  }
+
+  /* Grid backdrop */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, color-mix(in oklab, #ffffff 4%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, #ffffff 4%, transparent) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+
+  /* Shimmer sweep for chips */
+  .shimmer {
+    background: linear-gradient(
+      110deg,
+      transparent 30%,
+      color-mix(in oklab, #ffffff 18%, transparent) 50%,
+      transparent 70%
+    );
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
+
+  .section-pad {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+  @media (min-width: 768px) {
+    .section-pad {
+      padding-top: 8rem;
+      padding-bottom: 8rem;
+    }
+  }
+}
+
+/* ────────────────────────────────────────────────────────────
+   LIGHT THEME  (toggled via [data-theme="light"] on <html>)
+   Overriding the tokens flips every bg-ink / text-fg / white-α utility.
+──────────────────────────────────────────────────────────── */
+:root {
+  color-scheme: dark;
+}
+
+/* Theme-swapped project media: the dark asset shows by default, the light
+   asset only under [data-theme="light"] on <html>. */
+.theme-light-only {
+  display: none;
+}
+[data-theme="light"] .theme-dark-only {
+  display: none;
+}
+[data-theme="light"] .theme-light-only {
+  display: block;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --color-ink: #eef2f9;
+  --color-ink-2: #e6edf7;
+  --color-ink-3: #dde6f2;
+  --color-line: #d0dae9;
+
+  --color-fg: #0b1424;
+  --color-muted: #48566f;
+  --color-faint: #6f7d95;
+
+  /* The lever: white-α overlays, hairline borders & text-white
+     all resolve through var(--color-white) → dark slate on light. */
+  --color-white: #0b1424;
+}
+
+/* Utilities that hardcode dark values need explicit light variants. */
+[data-theme="light"] .glass {
+  background: color-mix(in oklab, #ffffff 80%, transparent);
+  border-color: color-mix(in oklab, #0b1424 12%, transparent);
+}
+[data-theme="light"] .glass-strong {
+  background: color-mix(in oklab, #ffffff 90%, transparent);
+  border-color: color-mix(in oklab, #0b1424 14%, transparent);
+}
+[data-theme="light"] .bg-grid {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, #0b1424 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, #0b1424 7%, transparent) 1px, transparent 1px);
+}
+[data-theme="light"] .text-gradient,
+[data-theme="light"] .text-gradient-animated {
+  background-image: linear-gradient(100deg, #1d4ed8, #2563eb 40%, #0891b2 100%);
+}
+[data-theme="light"] .shimmer {
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    color-mix(in oklab, #0b1424 12%, transparent) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+}
+[data-theme="light"] .card-hover:hover {
+  box-shadow:
+    0 24px 60px -24px color-mix(in oklab, var(--color-azure) 30%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--color-azure) 22%, transparent) inset;
+}
+
+/* Decorative page backdrop wash (see AuroraBackground) */
+.aurora-wash {
+  background: radial-gradient(125% 125% at 50% -10%, #0a1226 0%, #05070e 55%, #04060c 100%);
+}
+[data-theme="light"] .aurora-wash {
+  background: radial-gradient(125% 125% at 50% -10%, #ffffff 0%, #eaf1fb 55%, #dde8f7 100%);
+}
+[data-theme="light"] .aurora-blobs {
+  opacity: 0.5;
+}
+
+/* ────────────────────────────────────────────────────────────
+   ACCESSIBILITY — respect reduced motion
+──────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
