@@ -7,6 +7,7 @@ import { Github, Linkedin, Mail, MapPin, ArrowUpRight, Download } from "lucide-r
 import { siteConfig } from "@/lib/site";
 import { Button } from "@/components/ui/button";
 import { FloatingIcons } from "@/components/shared/floating-icons";
+import { Logo } from "@/components/shared/logo";
 
 function RotatingRole() {
   const roles = siteConfig.roles;
@@ -58,6 +59,14 @@ export function Hero() {
         animate="show"
         className="relative z-10 mx-auto flex max-w-3xl flex-col items-center text-center"
       >
+        {/* live 3D "M" centerpiece */}
+        <motion.div
+          variants={item}
+          className="mb-2 h-36 w-36 sm:h-44 sm:w-44 md:h-52 md:w-52"
+        >
+          <Logo fill priority interactive autoRotate={0.35} />
+        </motion.div>
+
         {/* availability */}
         <motion.div variants={item}>
           <span className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-xs font-medium text-muted backdrop-blur-md">

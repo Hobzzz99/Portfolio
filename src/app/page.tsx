@@ -1,4 +1,5 @@
 import { AuroraBackground } from "@/components/shared/aurora-background";
+import { SceneBackground } from "@/components/shared/scene-background";
 import { LoadingScreen } from "@/components/loading-screen";
 import { Navbar } from "@/components/navbar";
 import { Hero } from "@/components/sections/hero";
@@ -14,6 +15,7 @@ export default function Home() {
     <>
       <LoadingScreen />
       <AuroraBackground />
+      <SceneBackground />
       <Navbar />
       <main className="relative">
         <Hero />

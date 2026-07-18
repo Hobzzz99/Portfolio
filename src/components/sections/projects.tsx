@@ -7,6 +7,7 @@ import { projects, type Project } from "@/lib/data";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { StaggerGroup, itemVariants } from "@/components/shared/reveal";
 import { Badge } from "@/components/ui/badge";
+import { TiltCard } from "@/components/shared/tilt-card";
 import { cn } from "@/lib/utils";
 
 export function Projects() {
@@ -170,13 +171,14 @@ function ProjectActions({ project }: { project: Project }) {
 
 function FeaturedCard({ project }: { project: Project }) {
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="glass card-hover group relative overflow-hidden rounded-3xl p-6 md:p-8"
-    >
+    <TiltCard max={6}>
+      <motion.article
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="glass card-hover group relative overflow-hidden rounded-3xl p-6 md:p-8"
+      >
       <span className="absolute right-6 top-6 z-10 inline-flex items-center gap-1.5 rounded-full border border-amber-300/25 bg-amber-300/10 px-3 py-1 text-xs font-semibold text-amber-200">
         <Star size={12} className="fill-amber-200" /> Featured
       </span>
@@ -213,13 +215,15 @@ function FeaturedCard({ project }: { project: Project }) {
           <ProjectActions project={project} />
         </div>
       </div>
-    </motion.article>
+      </motion.article>
+    </TiltCard>
   );
 }
 
 function ProjectCard({ project }: { project: Project }) {
   return (
-    <article className="glass card-hover group flex h-full flex-col overflow-hidden rounded-3xl p-6">
+    <TiltCard className="h-full" max={9}>
+      <article className="glass card-hover group flex h-full flex-col overflow-hidden rounded-3xl p-6">
       <ProjectVisual project={project} className="mb-6 min-h-[180px]" />
 
       <p className="text-sm font-medium text-sky">{project.tagline}</p>
@@ -247,7 +251,8 @@ function ProjectCard({ project }: { project: Project }) {
         ))}
       </div>
 
-      <ProjectActions project={project} />
-    </article>
+        <ProjectActions project={project} />
+      </article>
+    </TiltCard>
   );
 }
